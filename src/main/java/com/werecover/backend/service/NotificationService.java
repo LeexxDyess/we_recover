@@ -1,5 +1,6 @@
 package com.werecover.backend.service;
 
+import com.werecover.backend.model.Role;
 import com.werecover.backend.model.User;
 import com.werecover.backend.repository.CheckInRepository;
 import com.werecover.backend.repository.UserRepository;
@@ -29,11 +30,11 @@ public class NotificationService {
     /**
      * ✅ Daily reminder for sponsees to check in (Runs every day at 6 PM).
      */
-    @Scheduled(cron = "0 0 18 * * ?") // Every day at 6 PM
+    @Scheduled(cron = "0 * * * * ?") // Every day at 6 PM
     public void sendDailyCheckInReminders() {
         System.out.println("🔔 Running daily check-in reminder notifications...");
 
-        List<User> sponsees = userRepository.findByRole("ROLE_SPONSEE"); // Find all sponsees
+        List<User> sponsees = userRepository.findByRole(Role.ROLE_SPONSEE); // ✅ Use Role Enum
 
         for (User sponsee : sponsees) {
             LocalDateTime startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay();

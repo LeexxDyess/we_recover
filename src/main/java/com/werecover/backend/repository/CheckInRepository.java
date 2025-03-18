@@ -3,11 +3,10 @@ package com.werecover.backend.repository;
 import com.werecover.backend.model.CheckIn;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
-
     /**
      * ✅ Find check-ins for a specific sponsee, ordered by most recent.
      */
@@ -19,7 +18,7 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
     List<CheckIn> findByUser_SponsorIdOrderByTimestampDesc(Long sponsorId);
 
     /**
-     * ✅ Check if a user has already submitted a check-in for a specific date.
+     * ✅ Check if a user has already checked in today (using LocalDateTime)
      */
     boolean existsByUserIdAndTimestampBetween(Long userId, LocalDateTime startOfDay, LocalDateTime endOfDay);
 }
